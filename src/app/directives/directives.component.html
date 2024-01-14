@@ -1,0 +1,8 @@
+<!-- Attribute directives just change some features of elements -->
+<div highlight color="green">Highlighted text</div>
+
+<!-- Structural directives change the DOM layout by adding and removing elements -->
+<ng-template [structural]="condition">
+  <div>Structural directive here</div>
+</ng-template>
+<div *structural="condition">Also structural directives</div>

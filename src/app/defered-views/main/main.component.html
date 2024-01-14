@@ -1,0 +1,89 @@
+<div>Content</div>
+<div>Content</div>
+<div>Content</div>
+<div>Content</div>
+<div>Content</div>
+<!-- default option `on idle`: when the browser is idle-->
+<!-- `on viewport`: when component is in the viewport -->
+@defer (on viewport) {
+<defer-child></defer-child>
+} @placeholder {
+<div>Placehold</div>
+}
+
+<!-- `on interaction`: when there is a click interaction-->
+<!-- @defer (on interaction) {
+    <defer-child></defer-child>
+}
+@placeholder {
+    <div>interaction Placehold</div>
+} -->
+
+<!-- `on hover`: when element is being hovered-->
+<!-- @defer (on hover) {
+    <defer-child></defer-child>
+}
+@placeholder {
+    <div>hover Placehold</div>
+} -->
+
+<!-- `on immediate`: executed as soon as possible after full page reload -->
+<!-- @defer (on immediate) {
+    <defer-child></defer-child>
+} -->
+
+<!-- `on timer`: can be loaded after a specified time -->
+<!-- @defer (on timer(2000)) {
+    <defer-child></defer-child>
+} -->
+
+<!-- COMBINING TRIGGERS -->
+
+<!-- @defer (on hover; on timer(2000)) {
+    <defer-child></defer-child>
+}
+@placeholder {
+    <div>hover Placehold</div>
+} -->
+
+<!-- @defer (on viewport; on interaction) {
+    <defer-child></defer-child>
+} 
+@placeholder {
+    <div>viewport Placehold</div>
+}-->
+
+<!-- WHEN CONDITION -->
+<!-- <button type="button" (click)="isVisible=true">Show</button>
+@defer (when isVisible) {
+    <defer-child></defer-child>
+} -->
+
+<!-- WHEN + PREFETCH : fully control when fetching something and when rendering something-->
+<!-- <button type="button" (click)="isVisible = true">Show</button>
+<button type="button" (click)="prefetchCondition = true">Load</button>
+@defer (when isVisible; prefetch when prefetchCondition) {
+<defer-child></defer-child>
+} -->
+<!-- prefetch when idle to improve user experience -->
+<!-- @defer (when isVisible; prefetch on idle) {
+    <defer-child></defer-child>
+} -->
+
+<!-- FULL DEFER SYNTAX -->
+<!-- @defer (on viewport) {
+    <defer-child></defer-child>
+} 
+@loading (after 150ms; minimum 150ms) {
+     this means we are showing it only after 150ms when component has not loaded
+     minimum show time means that it will show for a min of 150ms, not blink and confuse the user
+    <div>Loading...</div>
+}
+@placeholder (minimum 150ms) {
+     until we show loading, we show this placeholder. loading might not show at all
+    if we get the information back fast
+    <div>Placehold</div>
+}
+@error {
+    <div>Error</div>
+} -->

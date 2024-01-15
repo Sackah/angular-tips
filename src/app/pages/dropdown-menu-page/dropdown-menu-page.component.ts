@@ -1,4 +1,9 @@
-import { Component, ComponentRef, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 import { ClickOutsideDirective } from './clickoutside.directive';
 import { DropdownComponent } from '../../dropdown/dropdown.component';
 import { DropdownService } from '../../dropdown/services/dropdown.service';
@@ -28,9 +33,10 @@ export class DropdownMenuPageComponent {
     private dropdownService: DropdownService
   ) {}
 
-  openDropdown(event: MouseEvent) {
+  openDropdown(event: MouseEvent, dropdownTemplate: TemplateRef<any>) {
     const position = { top: event.clientY + 10, left: event.clientX + 10 };
     this.dropdownRef = this.dropdownService.open(
+      dropdownTemplate,
       this.viewContainerRef,
       position
     );

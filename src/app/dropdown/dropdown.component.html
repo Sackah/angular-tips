@@ -1,6 +1,5 @@
-<div>
-    <div class="dropdown" [style.top.px]="position?.top" [style.left.px]="position?.left">
-        <p>I am here i am here</p>
-        <ng-content></ng-content>
-    </div>
+<div class="dropdown" [style.top.px]="position?.top" [style.left.px]="position?.left">
+    <p>I am here i am here</p>
+    <ng-content></ng-content>
 </div>
+<div class="background" (click)="close()"></div>

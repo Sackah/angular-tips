@@ -9,4 +9,11 @@
     }
 </div>
 
-<button type="button" (click)="openDropdown($event)">click here to open dropdown</button>
+<button type="button" (click)="openDropdown($event, dropdownTemplate)">click here to open dropdown</button>
+<ng-template #dropdownTemplate>
+    <ul>
+        <li>first item</li>
+        <li>second item</li>
+        <li>third item</li>
+    </ul>
+</ng-template>

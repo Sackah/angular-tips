@@ -1,19 +1,32 @@
-<div class="menu-container" clickOutside (clickOutside)="clickedOutside()">
-    <div class="menu-toggler" (click)="toggleMenu()">Toggle menu</div>
-    @if (isMenuOpen) {
-    <div class="menu">
-        <div class="menu-item">News</div>
-        <div class="menu-item">Contact</div>
-        <div class="menu-item">About</div>
+<div class="page">
+    <div class="menu-container" clickOutside (clickOutside)="clickedOutside()">
+        <div class="menu-toggler" (click)="toggleMenu()">Toggle menu</div>
+        @if (isMenuOpen) {
+        <div class="menu">
+            <div class="menu-item">News</div>
+            <div class="menu-item">Contact</div>
+            <div class="menu-item">About</div>
+        </div>
+        }
     </div>
-    }
-</div>
 
-<button type="button" (click)="openDropdown($event, dropdownTemplate)">click here to open dropdown</button>
-<ng-template #dropdownTemplate>
-    <ul>
-        <li>first item</li>
-        <li>second item</li>
-        <li>third item</li>
-    </ul>
-</ng-template>
+    <button type="button" (click)="openDropdown($event, dropdownTemplate)">click here to open dropdown</button>
+    <ng-template #dropdownTemplate>
+        <ul>
+            <li>first item</li>
+            <li>second item</li>
+            <li>third item</li>
+        </ul>
+    </ng-template>
+
+
+    <button style="margin-top: 100px; display: block;" (click)="openDropdown($event,dropdownTemplate)">second
+        dropdown</button>
+    <ng-template #secondTemplate>
+        <ul>
+            <li>second dropdown</li>
+            <li>second dropdown</li>
+            <li>second dropdown</li>
+        </ul>
+    </ng-template>
+</div>

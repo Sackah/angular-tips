@@ -6,14 +6,11 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { DropdownComponent } from '../dropdown.component';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DropdownService {
-  private _ignoreNextClick = new BehaviorSubject<boolean>(false);
-  ignoreNextClick$ = this._ignoreNextClick.asObservable();
   constructor(private injector: Injector) {}
 
   open(
@@ -38,9 +35,5 @@ export class DropdownService {
 
   closeDropdown(dropdownComponentRef: ComponentRef<DropdownComponent>) {
     dropdownComponentRef.destroy();
-  }
-
-  setIgnoreNextClick(value: boolean) {
-    this._ignoreNextClick.next(value);
   }
 }

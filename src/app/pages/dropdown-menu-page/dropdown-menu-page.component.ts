@@ -34,6 +34,7 @@ export class DropdownMenuPageComponent {
   ) {}
 
   openDropdown(event: MouseEvent, dropdownTemplate: TemplateRef<any>) {
+    event.stopPropagation();
     const position = { top: event.clientY + 10, left: event.clientX + 10 };
     this.dropdownRef = this.dropdownService.open(
       dropdownTemplate,

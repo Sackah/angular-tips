@@ -1,0 +1,10 @@
+
+<!-- The limit specifies the total number of elements we are showing on the page -->
+<!-- The total specifies the total number of elements we have in the database, not from our current fetch -->
+<!-- changePage is an event which comes with the page number the user changed to -->
+<app-pagination
+    [currentPage]="currentPage"
+    [limit]="20"
+    [total]="500"
+    (changePage)="changePage($event)"
+></app-pagination>

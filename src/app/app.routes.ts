@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { DeferedViewsPageComponent } from './pages/defered-views-page/defered-views-page.component';
 import { ModalPageComponent } from './pages/modal-page/modal-page.component';
 import { DropdownMenuPageComponent } from './pages/dropdown-menu-page/dropdown-menu-page.component';
+import { PaginationPageComponent } from './pages/pagination-page/pagination-page.component';
+import { StarRatingPageComponent } from './pages/star-rating-page/star-rating-page.component';
 
 export const routes: Routes = [
   {
@@ -15,5 +17,17 @@ export const routes: Routes = [
   {
     path: 'dropdown',
     component: DropdownMenuPageComponent,
+  },
+  {
+    path: 'pagination',
+    component: PaginationPageComponent,
+  },
+  {
+    path: 'star',
+    component: StarRatingPageComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];

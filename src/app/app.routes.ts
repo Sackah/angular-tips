@@ -5,6 +5,7 @@ import { DropdownMenuPageComponent } from './pages/dropdown-menu-page/dropdown-m
 import { PaginationPageComponent } from './pages/pagination-page/pagination-page.component';
 import { StarRatingPageComponent } from './pages/star-rating-page/star-rating-page.component';
 import { GoodTable } from './computed-signals/good-table/good-table.component';
+import { ScrollAnimationPageComponent } from './pages/scroll-animation-page/scroll-animation-page.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,10 @@ export const routes: Routes = [
   {
     path: 'computed-signals',
     component: GoodTable,
+  },
+  {
+    path: 'intersection',
+    component: ScrollAnimationPageComponent,
   },
   {
     path: '**',

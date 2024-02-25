@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, computed, signal } from '@angular/core';
+import { CartComponent } from '../cart/cart.component';
 
 interface IssueInterface {
   id: string;
@@ -20,7 +21,7 @@ interface IssueEntriesInterface {
   templateUrl: './good-table.component.html',
   styleUrls: ['./good-table.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CartComponent],
 })
 export class GoodTable implements OnInit {
   @Input({ required: true }) issues!: IssueInterface[];

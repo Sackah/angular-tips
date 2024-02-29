@@ -1,0 +1,27 @@
+<header>
+  <section>
+    @for (_ of Progress; track $index) {
+    <span
+      [class]="{ active: $index <= currentIndex }"
+      (click)="setCurrentIndex($index)"
+    >
+      {{ $index + 1 }}
+    </span>
+    <div class="outer">
+      <div
+        [class]="{
+          inner: true,
+          active: $index < currentIndex,
+          hidden: $index === 2
+        }"
+      ></div>
+    </div>
+    }
+  </section>
+</header>
+
+<main>
+  @if (clientList) {
+  <app-clients-list [clients]="clientList"></app-clients-list>
+  }
+</main>

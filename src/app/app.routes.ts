@@ -6,6 +6,7 @@ import { PaginationPageComponent } from './pages/pagination-page/pagination-page
 import { StarRatingPageComponent } from './pages/star-rating-page/star-rating-page.component';
 import { GoodTable } from './computed-signals/good-table/good-table.component';
 import { ScrollAnimationPageComponent } from './pages/scroll-animation-page/scroll-animation-page.component';
+import { ProgressPageComponent } from './pages/progress-page/progress-page.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
   {
     path: 'intersection',
     component: ScrollAnimationPageComponent,
+  },
+  {
+    path: 'progress',
+    component: ProgressPageComponent,
   },
   {
     path: '**',

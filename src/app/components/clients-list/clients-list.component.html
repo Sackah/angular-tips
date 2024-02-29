@@ -1,0 +1,13 @@
+<form>
+    @for (clientDetails of clients; track $index) {
+        <div>
+            <label
+                (click)="selectClient($event, clientDetails.client)"
+            >
+                <input type="checkbox" [checked]="clientDetails.isChecked">
+                {{clientDetails.client.name}}
+            </label>
+        </div>
+    }
+  </form>
+  

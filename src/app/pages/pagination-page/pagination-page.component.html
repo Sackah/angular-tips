@@ -1,10 +1,19 @@
-
 <!-- The limit specifies the total number of elements we are showing on the page -->
 <!-- The total specifies the total number of elements we have in the database, not from our current fetch -->
 <!-- changePage is an event which comes with the page number the user changed to -->
+<h1>With input decorator</h1>
 <app-pagination
-    [currentPage]="currentPage"
-    [limit]="20"
-    [total]="500"
-    (changePage)="changePage($event)"
+  [currentPage]="currentPage"
+  [limit]="20"
+  [total]="500"
+  (changePage)="changePage($event)"
 ></app-pagination>
+
+<h1>With input signal</h1>
+<app-pagination-prime
+  [currentPage]="primeCurrent"
+  [limit]="20"
+  [total]="500"
+  (primeChange)="primeChange($event)"
+  [testTransform]="400"
+></app-pagination-prime>

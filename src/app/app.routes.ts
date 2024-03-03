@@ -42,6 +42,11 @@ export const routes: Routes = [
     component: ProgressPageComponent,
   },
   {
+    path: 'resource-manager',
+    loadChildren: () =>
+      import('./projects/rm/rm.routes').then((r) => r.RMRoutes),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

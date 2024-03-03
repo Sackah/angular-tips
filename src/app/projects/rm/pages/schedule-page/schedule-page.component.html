@@ -1,0 +1,92 @@
+<section class="page">
+  <div class="calendar">
+    <header>
+      <div class="toggles-left">
+        <button (click)="setToday()" style="color: #344054">Today</button>
+        <span class="center">
+          <button title="previous" class="center" (click)="handlePrev()">
+            <img src="assets/rm-assets/arrow-left.svg" alt="" />
+          </button>
+          <button title="next" class="center" (click)="handleNext()">
+            <img src="assets/rm-assets/arrow-right.svg" alt="" />
+          </button>
+        </span>
+      </div>
+      <div class="summary">
+        <h4>{{ this.months[this.date.getMonth()] }},</h4>
+        <p>{{ this.date.getFullYear() }}</p>
+      </div>
+      <div class="toggles-right">
+        <span class="center">
+          <button
+            [class]="{ active: viewmode === 'day' }"
+            (click)="viewmode = 'day'"
+          >
+            Day
+          </button>
+          <button
+            [class]="{ active: viewmode === 'week' }"
+            (click)="viewmode = 'week'"
+          >
+            Week
+          </button>
+          <button
+            [class]="{ active: viewmode === 'month' }"
+            (click)="viewmode = 'month'"
+          >
+            Month
+          </button>
+          <button
+            [class]="{ active: viewmode === 'year' }"
+            (click)="viewmode = 'year'"
+          >
+            Year
+          </button>
+        </span>
+        <button title="filter" class="center">
+          <img src="assets/rm-assets/filter-icon.svg" alt="" />
+        </button>
+        <button title="search" class="center">
+          <img src="assets/rm-assets/search-icon.svg" alt="" />
+        </button>
+      </div>
+    </header>
+    @if (viewmode === 'week') {
+    <main class="week-view">
+      <header>
+        <span class="center"
+          >PST <img src="assets/rm-assets/arrow-down.svg" alt=""
+        /></span>
+        <section>
+          @for (day of days; track $index) {
+          <div
+            [class]="{
+              center: true,
+              active:
+                generateWeekDays()[$index].toDateString() ===
+                today.toDateString()
+            }"
+          >
+            {{ generateWeekDays()[$index].getDate() }} {{ day }}
+          </div>
+          }
+        </section>
+      </header>
+      <summary>
+        <span>
+          @for (_ of t_fill; track $index) {
+          <div>
+            <p [class]="{ hidden: $index === 0 }">{{ 7 + $index }}:00</p>
+          </div>
+          }
+        </span>
+        <section>
+          @for (_ of w_fill; track $index) {
+          <div></div>
+          }
+        </section>
+      </summary>
+    </main>
+    }
+  </div>
+</section>

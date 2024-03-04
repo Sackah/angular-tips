@@ -52,41 +52,43 @@
       </div>
     </header>
     @if (viewmode === 'week') {
-    <main class="week-view">
-      <header>
-        <span class="center"
-          >PST <img src="assets/rm-assets/arrow-down.svg" alt=""
-        /></span>
-        <section>
-          @for (day of days; track $index) {
-          <div
-            [class]="{
-              center: true,
-              active:
-                generateWeekDays()[$index].toDateString() ===
-                today.toDateString()
-            }"
-          >
-            {{ generateWeekDays()[$index].getDate() }} {{ day }}
-          </div>
-          }
-        </section>
-      </header>
-      <summary>
-        <span>
-          @for (_ of t_fill; track $index) {
-          <div>
-            <p [class]="{ hidden: $index === 0 }">{{ 7 + $index }}:00</p>
-          </div>
-          }
-        </span>
-        <section>
-          @for (_ of w_fill; track $index) {
-          <div></div>
-          }
-        </section>
-      </summary>
-    </main>
+        <main class="week-view">
+        <header>
+            <span class="center"
+            >PST <img src="assets/rm-assets/arrow-down.svg" alt=""
+            /></span>
+            <section>
+            @for (day of days; track $index) {
+                <div
+                    [class]="{
+                    center: true,
+                    active:
+                        generateWeekDays()[$index].toDateString() ===
+                        today.toDateString()
+                    }"
+                >
+                    {{ generateWeekDays()[$index].getDate() }} {{ day }}
+                </div>
+            }
+            </section>
+        </header>
+        <summary>
+            <span>
+            @for (_ of t_fill; track $index) {
+                <div>
+                    <p [class]="{ hidden: $index === 0 }">{{ 7 + $index }}:00</p>
+                </div>
+            }
+            </span>
+            <section>
+            @for (_ of w_fill; track $index) {
+                <div [class.active]="isActive($index)">
+                    {{ getProjectName($index) }}
+                </div>
+            }
+            </section>
+        </summary>
+        </main>
     }
   </div>
 </section>

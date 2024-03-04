@@ -1,0 +1,32 @@
+  isActive(index: number) {
+    const date = this.w_fill[index];
+
+    return this.userSchedules.some((schedule) => {
+      console.log(
+        'date:',
+        date,
+        'start:',
+        schedule.project.start,
+        'end:',
+        schedule.project.end
+      );
+      return date >= schedule.project.start && date <= schedule.project.end;
+    });
+  }
+
+  getProjectName(index: number) {
+    const date = this.w_fill[index];
+    const schedule = this.userSchedules.find((schedule) => {
+      console.log(
+        'date:',
+        date,
+        'start:',
+        schedule.project.start,
+        'end:',
+        schedule.project.end
+      );
+      return date >= schedule.project.start && date <= schedule.project.end;
+    });
+
+    return schedule ? schedule.project.name : '';
+  }

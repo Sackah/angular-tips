@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { months, days } from './static';
+import { months, days, paulSchedule } from './static';
 import { handleNext, handlePrev, generateWeekDays } from './utils';
 
 @Component({
@@ -15,8 +15,9 @@ export class SchedulePageComponent {
   date = new Date();
   months = months;
   days = days;
-  w_fill = Array(7 * 9).fill(0);
+  w_fill!: Date[];
   t_fill = Array(9).fill(0);
+  userSchedules = paulSchedule;
 
   ngOnInit() {
     this.setToday();
@@ -31,16 +32,49 @@ export class SchedulePageComponent {
       today.getMonth(),
       today.getDate() + diff
     );
+    this.initializeW_fill();
+  }
+
+  initializeW_fill() {
+    this.w_fill = Array.from({ length: 7 * 9 }).map((_, index) => {
+      const hour = Math.floor(index / 7) + 8; // hours from 8 to 15
+      const day = index % 7; // days from 0 (Monday) to 6 (Sunday)
+      const date = new Date(this.date);
+      date.setDate(date.getDate() + day);
+      date.setHours(hour);
+      return date;
+    });
   }
 
   handleNext() {
     this.date = handleNext(this.date, this.viewmode);
+    this.initializeW_fill();
   }
   handlePrev() {
     this.date = handlePrev(this.date, this.viewmode);
+    this.initializeW_fill();
   }
 
   generateWeekDays() {
     return generateWeekDays(this.date);
+  }
+
+  isActive(index: number) {
+    const date = this.w_fill[index];
+
+    return this.userSchedules.some(
+      (schedule) =>
+        date >= schedule.project.start && date <= schedule.project.end
+    );
+  }
+
+  getProjectName(index: number) {
+    const date = this.w_fill[index];
+    const schedule = this.userSchedules.find(
+      (schedule) =>
+        date >= schedule.project.start && date <= schedule.project.end
+    );
+
+    return schedule ? schedule.project.name : '';
   }
 }

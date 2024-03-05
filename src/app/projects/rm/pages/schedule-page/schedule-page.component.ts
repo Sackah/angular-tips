@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { months, days, paulSchedule } from './static';
-import { handleNext, handlePrev, generateWeekDays } from './utils';
+import {
+  handleNext,
+  handlePrev,
+  generateWeekDays,
+  formatDateRange,
+} from './utils';
 
 @Component({
   selector: 'app-schedule-page',
@@ -68,13 +73,17 @@ export class SchedulePageComponent {
     );
   }
 
-  getProjectName(index: number) {
+  getProject(index: number) {
     const date = this.w_fill[index];
     const schedule = this.userSchedules.find(
       (schedule) =>
         date >= schedule.project.start && date <= schedule.project.end
     );
 
-    return schedule ? schedule.project.name : '';
+    return schedule!.project;
+  }
+
+  formatDate(start: Date, end: Date) {
+    return formatDateRange(start, end);
   }
 }

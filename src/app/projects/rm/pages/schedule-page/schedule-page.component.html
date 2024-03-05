@@ -73,17 +73,23 @@
             </section>
         </header>
         <summary>
-            <span>
+            <span class="sidebar">
+            <!-- Sidebar content goes here, you can clear the for loop -->
             @for (_ of t_fill; track $index) {
                 <div>
-                    <p [class]="{ hidden: $index === 0 }">{{ 7 + $index }}:00</p>
+                    <p [class.hidden]="$index === 0">{{ 7 + $index }}:00</p>
                 </div>
             }
             </span>
             <section>
-            @for (_ of w_fill; track $index) {
+            @for (date of w_fill; track $index) {
                 <div [class.active]="isActive($index)">
-                    {{ getProjectName($index) }}
+                    @if (isActive($index)) {
+                        <span class="active-marker">
+                            <h5>{{ getProject($index).name }}</h5>
+                            <p>{{formatDate(getProject($index).start, getProject($index).end)}}</p>
+                        </span>
+                    }
                 </div>
             }
             </section>

@@ -86,3 +86,34 @@ export const generateWeekDays = (date = new Date()) => {
 
   return weekDays;
 };
+
+export const formatDateRange = (startDate: Date, endDate: Date) => {
+  const startTime = startDate.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+  const endTime = endDate.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+
+  // Check if the time range is between 8:00 and 15:00 (inclusive)
+  if (startDate.getHours() >= 8 && endDate.getHours() <= 15) {
+    return `${startTime} - ${endTime}`;
+  } else {
+    const formattedStartDate = startDate.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const formattedEndDate = endDate.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    return `${formattedStartDate} ${startTime} - ${formattedEndDate} ${endTime}`;
+  }
+};

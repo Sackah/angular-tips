@@ -1,3 +1,5 @@
+import { UserSchedule } from './static';
+
 export const handlePrev = (
   date = new Date(),
   viewmode: 'day' | 'month' | 'week' | 'year'
@@ -87,33 +89,55 @@ export const generateWeekDays = (date = new Date()) => {
   return weekDays;
 };
 
-export const formatDateRange = (startDate: Date, endDate: Date) => {
-  const startTime = startDate.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
-  const endTime = endDate.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
+export const getStartOfWeek = (date: Date): Date => {
+  const startOfWeek = new Date(date);
+  startOfWeek.setDate(date.getDate() - date.getDay() + 1);
+  startOfWeek.setHours(0, 0, 0, 0);
+  return startOfWeek;
+};
 
-  // Check if the time range is between 8:00 and 15:00 (inclusive)
-  if (startDate.getHours() >= 8 && endDate.getHours() <= 15) {
-    return `${startTime} - ${endTime}`;
-  } else {
-    const formattedStartDate = startDate.toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-    const formattedEndDate = endDate.toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
+export const getEndOfWeek = (date: Date): Date => {
+  const endOfWeek = new Date(date);
+  endOfWeek.setDate(date.getDate() + (6 - date.getDay()));
+  endOfWeek.setHours(23, 59, 59, 999);
+  return endOfWeek;
+};
 
-    return `${formattedStartDate} ${startTime} - ${formattedEndDate} ${endTime}`;
-  }
+export const calculateGridColumn = (
+  project: UserSchedule['project'],
+  date: Date
+) => {
+  const startOfWeek = generateWeekDays(date)[0];
+  const endOfWeek = generateWeekDays(date)[6];
+  const startDate = new Date(project.startDate);
+  const endDate = new Date(project.endDate);
+
+  // move start and end dates to the nearest Monday and Sunday
+  const adjustedStartDate = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth(),
+    startDate.getDate() - startDate.getDay() + 1
+  );
+  const adjustedEndDate = new Date(
+    endDate.getFullYear(),
+    endDate.getMonth(),
+    endDate.getDate() + (6 - endDate.getDay())
+  );
+
+  const gridColumnStart = Math.max(
+    Math.ceil(
+      (adjustedStartDate.getTime() - startOfWeek.getTime()) /
+        (1000 * 60 * 60 * 24)
+    ),
+    1
+  );
+  const gridColumnEnd = Math.min(
+    Math.floor(
+      (adjustedEndDate.getTime() - startOfWeek.getTime()) /
+        (1000 * 60 * 60 * 24)
+    ) + 2,
+    8
+  );
+
+  return `${gridColumnStart} / ${gridColumnEnd}`;
 };

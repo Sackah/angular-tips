@@ -30,3 +30,22 @@
 
     return schedule ? schedule.project.name : '';
   }
+
+    getSchedules() {
+    const startOfWeek = this.generateWeekDays()[0];
+    const endOfWeek = this.generateWeekDays()[6];
+
+    console.log(
+      this.userSchedules.filter(
+        (schedule) =>
+          !(schedule.project.endDate < startOfWeek) ||
+          schedule.project.startDate > endOfWeek
+      )
+    );
+
+    return this.userSchedules.filter(
+      (schedule) =>
+        !(schedule.project.endDate < startOfWeek) ||
+        schedule.project.startDate > endOfWeek
+    );
+  }

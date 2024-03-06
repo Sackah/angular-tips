@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
-import { months, days, paulSchedule } from './static';
+import {
+  months,
+  days,
+  paulSchedule,
+  UserSchedule,
+  josephSchedule,
+} from './static';
 import {
   handleNext,
   handlePrev,
   generateWeekDays,
-  formatDateRange,
+  getStartOfWeek,
+  getEndOfWeek,
+  calculateGridColumn,
 } from './utils';
 
 @Component({
@@ -20,70 +28,73 @@ export class SchedulePageComponent {
   date = new Date();
   months = months;
   days = days;
-  w_fill!: Date[];
-  t_fill = Array(9).fill(0);
-  userSchedules = paulSchedule;
+  w_fill = Array(7 * 9).fill('💪');
+  userSchedules = josephSchedule;
 
   ngOnInit() {
     this.setToday();
   }
 
   setToday() {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
+    const dayOfWeek = this.today.getDay();
     const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
     this.date = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + diff
+      this.today.getFullYear(),
+      this.today.getMonth(),
+      this.today.getDate() + diff
     );
-    this.initializeW_fill();
-  }
-
-  initializeW_fill() {
-    this.w_fill = Array.from({ length: 7 * 9 }).map((_, index) => {
-      const hour = Math.floor(index / 7) + 8; // hours from 8 to 15
-      const day = index % 7; // days from 0 (Monday) to 6 (Sunday)
-      const date = new Date(this.date);
-      date.setDate(date.getDate() + day);
-      date.setHours(hour);
-      return date;
-    });
   }
 
   handleNext() {
     this.date = handleNext(this.date, this.viewmode);
-    this.initializeW_fill();
+    this.getSchedules();
   }
   handlePrev() {
     this.date = handlePrev(this.date, this.viewmode);
-    this.initializeW_fill();
+    this.getSchedules();
   }
 
   generateWeekDays() {
     return generateWeekDays(this.date);
   }
 
-  isActive(index: number) {
-    const date = this.w_fill[index];
+  getSchedules() {
+    const startOfWeek = getStartOfWeek(this.generateWeekDays()[0]);
+    const endOfWeek = getEndOfWeek(this.generateWeekDays()[6]);
 
-    return this.userSchedules.some(
-      (schedule) =>
-        date >= schedule.project.start && date <= schedule.project.end
-    );
+    return this.userSchedules.filter((schedule) => {
+      const { startDate, endDate } = schedule.project;
+
+      // Check if the project starts and ends within the current week
+      if (startDate >= startOfWeek && endDate <= endOfWeek) {
+        return true;
+      }
+
+      // Check if the project spans multiple weeks
+      if (startDate < startOfWeek && endDate > endOfWeek) {
+        return true;
+      }
+
+      // Check if the project starts or ends within the current week
+      if (
+        (startDate >= startOfWeek && startDate <= endOfWeek) ||
+        (endDate >= startOfWeek && endDate <= endOfWeek)
+      ) {
+        return true;
+      }
+
+      // If none of the above conditions are met, exclude the project
+      return false;
+    });
   }
 
-  getProject(index: number) {
-    const date = this.w_fill[index];
-    const schedule = this.userSchedules.find(
-      (schedule) =>
-        date >= schedule.project.start && date <= schedule.project.end
-    );
-
-    return schedule!.project;
+  calculateGridColumn(project: UserSchedule['project']) {
+    return calculateGridColumn(project, this.date);
   }
 
-  formatDate(start: Date, end: Date) {
-    return formatDateRange(start, end);
-  }
+  calculateGridRow = (index: number): string => {
+    const rowStart = index + 1;
+    const rowEnd = rowStart + 1;
+    return `${rowStart} / ${rowEnd}`;
+  };
 }

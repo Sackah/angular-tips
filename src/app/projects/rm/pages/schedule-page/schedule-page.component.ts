@@ -1,100 +1,32 @@
 import { Component } from '@angular/core';
+import { ScheduleCalendarComponent } from '../../components/schedule-calendar/schedule-calendar.component';
+import { CommonModule } from '@angular/common';
 import {
-  months,
-  days,
-  paulSchedule,
-  UserSchedule,
   josephSchedule,
-} from './static';
-import {
-  handleNext,
-  handlePrev,
-  generateWeekDays,
-  getStartOfWeek,
-  getEndOfWeek,
-  calculateGridColumn,
-} from './utils';
+  paulSchedule,
+} from '../../components/schedule-calendar/static';
 
 @Component({
   selector: 'app-schedule-page',
   standalone: true,
-  imports: [],
   templateUrl: './schedule-page.component.html',
   styleUrl: './schedule-page.component.css',
+  imports: [ScheduleCalendarComponent, CommonModule],
 })
 export class SchedulePageComponent {
-  viewmode: 'day' | 'week' | 'month' | 'year' = 'week';
-  today = new Date();
-  date = new Date();
-  months = months;
-  days = days;
-  w_fill = Array(7 * 9).fill('💪');
-  userSchedules = josephSchedule;
+  schedule = josephSchedule;
 
   ngOnInit() {
-    this.setToday();
+    this.randomlyReassignSchedule();
   }
 
-  setToday() {
-    const dayOfWeek = this.today.getDay();
-    const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-    this.date = new Date(
-      this.today.getFullYear(),
-      this.today.getMonth(),
-      this.today.getDate() + diff
-    );
-  }
-
-  handleNext() {
-    this.date = handleNext(this.date, this.viewmode);
-    this.getSchedules();
-  }
-  handlePrev() {
-    this.date = handlePrev(this.date, this.viewmode);
-    this.getSchedules();
-  }
-
-  generateWeekDays() {
-    return generateWeekDays(this.date);
-  }
-
-  getSchedules() {
-    const startOfWeek = getStartOfWeek(this.generateWeekDays()[0]);
-    const endOfWeek = getEndOfWeek(this.generateWeekDays()[6]);
-
-    return this.userSchedules.filter((schedule) => {
-      const { startDate, endDate } = schedule.project;
-
-      // Check if the project starts and ends within the current week
-      if (startDate >= startOfWeek && endDate <= endOfWeek) {
-        return true;
+  randomlyReassignSchedule() {
+    setInterval(() => {
+      if (this.schedule === josephSchedule) {
+        this.schedule = paulSchedule;
+      } else {
+        this.schedule = josephSchedule;
       }
-
-      // Check if the project spans multiple weeks
-      if (startDate < startOfWeek && endDate > endOfWeek) {
-        return true;
-      }
-
-      // Check if the project starts or ends within the current week
-      if (
-        (startDate >= startOfWeek && startDate <= endOfWeek) ||
-        (endDate >= startOfWeek && endDate <= endOfWeek)
-      ) {
-        return true;
-      }
-
-      // If none of the above conditions are met, exclude the project
-      return false;
-    });
+    }, 5000);
   }
-
-  calculateGridColumn(project: UserSchedule['project']) {
-    return calculateGridColumn(project, this.date);
-  }
-
-  calculateGridRow = (index: number): string => {
-    const rowStart = index + 1;
-    const rowEnd = rowStart + 1;
-    return `${rowStart} / ${rowEnd}`;
-  };
 }

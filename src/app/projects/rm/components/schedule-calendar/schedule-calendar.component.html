@@ -1,0 +1,97 @@
+<div class="calendar">
+    <header>
+      <div class="toggles-left">
+        <button (click)="setToday()" style="color: #344054">Today</button>
+        <span class="center">
+          <button title="previous" class="center" (click)="handlePrev()">
+            <img src="assets/rm-assets/arrow-left.svg" alt="" />
+          </button>
+          <button title="next" class="center" (click)="handleNext()">
+            <img src="assets/rm-assets/arrow-right.svg" alt="" />
+          </button>
+        </span>
+      </div>
+      <div class="summary">
+        <h4>{{ this.months[this.date.getMonth()] }},</h4>
+        <p>{{ this.date.getFullYear() }}</p>
+      </div>
+      <div class="toggles-right">
+        <span class="center">
+          <button
+            [class]="{ active: viewmode === 'day' }"
+            (click)="viewmode = 'day'"
+          >
+            Day
+          </button>
+          <button
+            [class]="{ active: viewmode === 'week' }"
+            (click)="viewmode = 'week'"
+          >
+            Week
+          </button>
+          <button
+            [class]="{ active: viewmode === 'month' }"
+            (click)="viewmode = 'month'"
+          >
+            Month
+          </button>
+          <button
+            [class]="{ active: viewmode === 'year' }"
+            (click)="viewmode = 'year'"
+          >
+            Year
+          </button>
+        </span>
+        <button title="filter" class="center">
+          <img src="assets/rm-assets/filter-icon.svg" alt="" />
+        </button>
+      </div>
+    </header>
+    @if (viewmode === 'week') {
+    <main class="week-view">
+      <header>
+        <span class="center"
+          >PST <img src="assets/rm-assets/arrow-down.svg" alt=""
+        /></span>
+        <section>
+          @for (day of days; track $index) {
+          <div
+            [class]="{
+              center: true,
+              active:
+                generateWeekDays()[$index].toDateString() ===
+                today.toDateString()
+            }"
+          >
+            {{ generateWeekDays()[$index].getDate() }} {{ day }}
+          </div>
+          }
+        </section>
+      </header>
+      <summary>
+        <span class="sidebar">
+          <ng-content></ng-content>
+        </span>
+        <div>
+          <section class="outline-grid">
+            @for (_ of w_fill; track $index) {
+              <div></div>
+            }
+          </section>
+          <section class="schedule-grid">
+            @for (schedule of getSchedules(); track $index) {
+              <span
+                class="center"
+                [style.gridColumn]="calculateGridColumn(schedule.project)"
+                [style.gridRow]="calculateGridRow($index)"
+              >
+                <h5>{{ schedule.project.name }}</h5>
+                <p>{{ schedule.project.workHours }} hour per day</p>
+              </span>
+            }
+          </section>
+        </div>
+      </summary>
+    </main>
+    }
+  </div>

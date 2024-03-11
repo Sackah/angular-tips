@@ -47,6 +47,11 @@ export const routes: Routes = [
       import('./projects/rm/rm.routes').then((r) => r.RMRoutes),
   },
   {
+    path: 'ads',
+    loadChildren: () =>
+      import('./projects/ads/ads.routes').then((r) => r.ADSRoutes),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

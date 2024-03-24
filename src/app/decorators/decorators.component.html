@@ -1,0 +1,11 @@
+<p>decorators works!</p>
+{{ flavor }}
+<button (click)="addToppings()">Confirm</button>
+<ul>
+  @for (top of toppings; track $index) {
+  <li>{{ top }}</li>
+  }
+</ul>
+<p>{{ price }}</p>
+<p>You clicked {{ count }} times</p>
+<button (click)="setCount(count + 1)">Click me</button>

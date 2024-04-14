@@ -11,6 +11,7 @@ import { ProtectedPageComponent } from './pages/protected-page/protected-page.co
 import { authGuard } from './guards/auth.guard';
 import { usersResolver } from './guards/users.resolver';
 import { OutOfRootPageComponent } from './pages/out-of-root-page/out-of-root-page.component';
+import { BlurLoadPage } from './pages/blur-load-page/blur-load-page.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +57,10 @@ export const routes: Routes = [
   {
     path: 'out-of-root',
     component: OutOfRootPageComponent,
+  },
+  {
+    path: 'blur-load',
+    component: BlurLoadPage,
   },
   {
     path: 'resource-manager',

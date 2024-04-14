@@ -7,6 +7,10 @@ import { StarRatingPageComponent } from './pages/star-rating-page/star-rating-pa
 import { GoodTable } from './computed-signals/good-table/good-table.component';
 import { ScrollAnimationPageComponent } from './pages/scroll-animation-page/scroll-animation-page.component';
 import { ProgressPageComponent } from './pages/progress-page/progress-page.component';
+import { ProtectedPageComponent } from './pages/protected-page/protected-page.component';
+import { authGuard } from './guards/auth.guard';
+import { usersResolver } from './guards/users.resolver';
+import { OutOfRootPageComponent } from './pages/out-of-root-page/out-of-root-page.component';
 
 export const routes: Routes = [
   {
@@ -36,10 +40,22 @@ export const routes: Routes = [
   {
     path: 'intersection',
     component: ScrollAnimationPageComponent,
+    data: { animation: 'isRight' },
   },
   {
     path: 'progress',
     component: ProgressPageComponent,
+    data: { animation: 'isLeft' },
+  },
+  {
+    path: 'protected',
+    component: ProtectedPageComponent,
+    canActivate: [authGuard],
+    resolve: { users: usersResolver },
+  },
+  {
+    path: 'out-of-root',
+    component: OutOfRootPageComponent,
   },
   {
     path: 'resource-manager',

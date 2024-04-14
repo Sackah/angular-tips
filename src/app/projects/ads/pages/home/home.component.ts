@@ -1,15 +1,22 @@
-import { Component, TemplateRef } from '@angular/core';
-import { ADSAngularWrapperModule } from '../../../../../../ads-angular-wrapper/src/lib/ads-angular-wrapper.module';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ADSAngularWrapperModule],
+  imports: [FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent {
-  handleDateChange(event: any) {
-    console.log(event.detail);
+  handleChange(event: any) {
+    console.log(event.detail, 'event detail');
+  }
+  toggleSize(el: HTMLAmalitechSelectElement) {
+    el.size = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)] as
+      | 'small'
+      | 'medium'
+      | 'large';
   }
 }

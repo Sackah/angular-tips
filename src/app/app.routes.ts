@@ -12,6 +12,7 @@ import { authGuard } from './guards/auth.guard';
 import { usersResolver } from './guards/users.resolver';
 import { OutOfRootPageComponent } from './pages/out-of-root-page/out-of-root-page.component';
 import { BlurLoadPage } from './pages/blur-load-page/blur-load-page.component';
+import { TablePageComponent } from './pages/table-page/table-page.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,10 @@ export const routes: Routes = [
   {
     path: 'blur-load',
     component: BlurLoadPage,
+  },
+  {
+    path: 'table',
+    component: TablePageComponent,
   },
   {
     path: 'resource-manager',

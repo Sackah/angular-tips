@@ -10,3 +10,7 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+html, body{
+  scroll-behavior: smooth;
+}

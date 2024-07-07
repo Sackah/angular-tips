@@ -16,8 +16,8 @@ import {
   styleUrl: './app.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   animations: [
-    // fader,
-    slider,
+    fader,
+    // slider,
     // transformer,
     // stepper,
   ],

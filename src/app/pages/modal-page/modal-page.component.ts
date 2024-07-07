@@ -2,6 +2,7 @@ import {
   Component,
   ComponentRef,
   TemplateRef,
+  ViewChild,
   ViewContainerRef,
   inject,
 } from '@angular/core';
@@ -19,13 +20,18 @@ export class ModalPageComponent {
   private modalRef?: ComponentRef<ModalComponent>;
   modalService = inject(ModalService);
   viewContainerRef = inject(ViewContainerRef);
+  @ViewChild('modalTemplate') modalTemplate?: TemplateRef<any>;
+
+  someText = 'Some text';
 
   openModal(modalTemplate: TemplateRef<any>) {
+    console.log(this.modalTemplate);
     this.modalRef = this.modalService.open(
       modalTemplate,
       this.viewContainerRef,
       { size: 'lg', title: 'Foo' }
     );
+    this.modalRef?.changeDetectorRef.detectChanges();
   }
 
   // @showModalBefore()

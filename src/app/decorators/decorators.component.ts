@@ -32,6 +32,12 @@ export class DecoratorsComponent {
   onEffect() {
     document.title = `You clicked ${this.count} times`;
   }
+
+  @Destroy
+  service = new Service();
+
+  @Destroy
+  manager = new Service();
 }
 
 // class
@@ -132,3 +138,88 @@ function useEffect() {
     target['ngAfterViewChecked' as Key] = descriptor.value;
   };
 }
+
+// export function Destroy(target: any, property: string) {
+//   type Key = keyof typeof target;
+//   // console.log(target);
+//   //@ts-ignore
+//   target['ngOnDestroy' as Key] = function () {
+//     console.log('trying to destroy', this, property);
+//     // target['property'].destroy();
+//   };
+// }
+
+// export function Destroy(target: any, property: string) {
+//   type Key = keyof typeof target;
+//   //@ts-ignore
+//   target['ngOnDestroy' as Key] = function () {
+//     console.log('trying to destroy', this, property);
+//     if (this[property] && typeof this[property].destroy === 'function') {
+//       this[property].destroy();
+//     }
+//   };
+// }
+
+export function Destroy(target: any, property: string) {
+  const originalOnDestroy = target.ngOnDestroy;
+
+  target.ngOnDestroy = function () {
+    console.log('trying to destroy', this, property);
+    if (this[property] && typeof this[property].destroy === 'function') {
+      this[property].destroy();
+    }
+
+    if (originalOnDestroy) {
+      originalOnDestroy.apply(this);
+    }
+  };
+}
+
+class Service {
+  destroy() {
+    console.log('Destroy!!');
+  }
+}
+
+export function Cache(
+  target: Object,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  const cache = new Map();
+
+  descriptor.value = function (...args: any[]) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    const result = originalMethod.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+
+  return descriptor;
+}
+
+class MyClass {
+  callCount = 0;
+
+  @Cache
+  myMethod(arg: any) {
+    this.callCount++;
+    return arg * 2;
+  }
+}
+
+const myInstance = new MyClass();
+
+console.log(myInstance.myMethod(2)); // Logs "4"
+console.log(myInstance.callCount); // Logs "1"
+
+console.log(myInstance.myMethod(2)); // Logs "4"
+console.log(myInstance.callCount); // Logs "1" (not "2", because the result was cached)
+
+console.log(myInstance.myMethod(3)); // Logs "6"
+console.log(myInstance.callCount); // Logs "2" (because a new argument was used)

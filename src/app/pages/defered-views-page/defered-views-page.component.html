@@ -14,3 +14,8 @@
 <a [routerLink]="['/ads']">ADS here</a>
 <a [routerLink]="['/out-of-root']">Out of root here</a>
 <a [routerLink]="['/blur-load']">Blur load here</a>
+<a [routerLink]="['/table']">Table here</a>
+<a [routerLink]="['']" fragment="section">Nav to section</a>
+<button (click)="navtosection()">Button to section</button>
+
+<section id="section" style="margin-top: 100rem">Section here</section>

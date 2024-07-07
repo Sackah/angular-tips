@@ -41,7 +41,7 @@ export class ModalService {
       this.submitModal(modalComponentRef)
     );
     this.document.body.appendChild(modalComponentRef.location.nativeElement);
-
+    contentViewRef.detectChanges();
     return modalComponentRef;
   }
 

@@ -1,0 +1,35 @@
+<table>
+  <thead>
+  <tr>
+    <ng-container
+      *ngTemplateOutlet="
+        headers() || defaultHeaderTemplate;
+        context: { $implicit: data() }
+      "
+    ></ng-container>
+  </tr>
+  </thead>
+  <tbody>
+    @for (row of data(); track $index) {
+      <tr>
+        <ng-container
+          *ngTemplateOutlet="
+            rows() || defaultRowTemplate;
+            context: {$implicit: row}"
+        ></ng-container>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<ng-template #defaultHeaderTemplate let-data>
+  @for (header of data[0] | keyvalue; track header) {
+    <th>{{ header.key }}</th>
+  }
+</ng-template>
+
+<ng-template #defaultRowTemplate let-row>
+  @for (cell of row | keyvalue; track cell) {
+    <td>{{ cell.value }}</td>
+  }
+</ng-template>
